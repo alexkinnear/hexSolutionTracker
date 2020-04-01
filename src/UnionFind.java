@@ -1,8 +1,14 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner;
+
 // Union by Size with Path Compression
 public class UnionFind {
     int size;
-    private int[] id;
-    private int[] treeSize;
+    public int[] id;
+    public int[] treeSize;
 
     UnionFind(int size) {
         this.size = size;
@@ -51,7 +57,8 @@ public class UnionFind {
         return root;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
+
 
     }
 }
