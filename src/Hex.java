@@ -68,26 +68,26 @@ public class Hex {
         }
 
         for (int i = 0; i < p1.size(); i++) {
-            if (i+1 < p1.size() && board.getNeighbors(p1.get(i)).contains(p1.get(i+1))) {
-                board.Union(p1.get(i), p1.get(i+1));
+            for (int j = 0; j < p1.size(); j++) {
+                if (board.getNeighbors(p1.get(i)).contains(p1.get(j))) {
+                    board.Union(p1.get(i), p1.get(j));
+                }
             }
         }
         for (int i = 0; i < p2.size(); i++) {
-            if (i+1 < p2.size() && board.getNeighbors(p2.get(i)).contains(p2.get(i+1))) {
-                board.Union(p2.get(i), p2.get(i+1));
+            for (int j = 0; j < p2.size(); j++) {
+                if (board.getNeighbors(p2.get(i)).contains(p2.get(j))) {
+                    board.Union(p2.get(i), p2.get(j));
+                }
             }
         }
 
-//        for (int i = 122; i <= 125; i++) {
-//            System.out.println(board.find(i));
-//        }
-
         int moves = p1.size() + p2.size();
 
-        if (board.find(122) == board.find(123)) System.out.println("Red Wins after " + moves + " moves");
-        if (board.find(124) == board.find(125)) System.out.print("Blue Wins after " + moves + " moves");
+        if (board.find(122) == board.find(123)) System.out.println("- - - - > Red Wins after " + moves + " moves! Here is the final board.");
+        if (board.find(124) == board.find(125)) System.out.print("- - - - - > Blue Wins after " + moves + " moves! Here is the final board.");
 
-        System.out.println();
+
         printBoard(p1, p2);
     }
 }

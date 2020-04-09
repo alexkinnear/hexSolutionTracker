@@ -1,5 +1,6 @@
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 // Union by Size with Path Compression
@@ -43,11 +44,11 @@ public class UnionFind {
     // Find element and return root with path compression along the way
     public int find(int i) {
         int root = i;
-//        return id[i];
         while (root != id[root]) {
             root = id[root];
         }
 
+        // path compression
         while (i != root) {
             int num = id[i];
             id[i] = num;
@@ -60,7 +61,7 @@ public class UnionFind {
 
     public ArrayList<Integer> getNeighbors(int num) {
         ArrayList<Integer> neighbors = new ArrayList<>();
-//        x-1, x+1,x-11, x-10, x+10, x+11
+//      Neighboring positions: x-1, x+1,x-11, x-10, x+10, x+11
         if (num - 1 >= 1) {
             neighbors.add(num-11);
         }
@@ -82,30 +83,58 @@ public class UnionFind {
         return neighbors;
     }
 
-    public static void main(String[] args) throws FileNotFoundException {
-        int NumElements = 128;
-        int NumInSameSet = 16;
+    public static void main(String[] args) {
 
-        UnionFind ds = new UnionFind( NumElements );
-        int set1, set2;
 
-        for( int k = 1; k < NumInSameSet; k *= 2 )
-        {
-            for( int j = 0; j + k < NumElements; j += 2 * k )
-            {
-                set1 = ds.find( j );
-                set2 = ds.find( j + k );
-                ds.Union( set1, set2 );
+        // Testing for Union and Find methods
+        UnionFind UF = new UnionFind(100);
+        int set1 = 2;           // All numbers divisible by 2
+        int set2 = 3;           // All numbers divisible by 3 but not by 2
+        int set3 = 5;           // All numbers divisible by 5 but not by 2 or 3
+        int set4 = 7;           // All other numbers
+
+        for (int i = 1; i <= UF.size; i++) {
+            if (i % 2 == 0) {
+                UF.Union(set1, i);
+            }
+            else if (i % 3 == 0) {
+                UF.Union(set2, i);
+            }
+            else if (i % 5 == 0) {
+                UF.Union(set3, i);
+            }
+            else {
+                UF.Union(set4, i);
             }
         }
 
-        for( int i = 0; i < NumElements; i++ )
-        {
-            System.out.print( ds.find( i )+ "*" );
-            if( i % NumInSameSet == NumInSameSet - 1 )
-                System.out.println( );
+        ArrayList<Integer> nums1 = new ArrayList<>();
+        ArrayList<Integer> nums2 = new ArrayList<>();
+        ArrayList<Integer> nums3 = new ArrayList<>();
+        ArrayList<Integer> nums4 = new ArrayList<>();
+        for (int i = 1; i < UF.size; i++) {
+            if (UF.find(i) == UF.find(set1)) {
+                nums1.add(UF.find(set1));
+            }
+            else if (UF.find(i) == UF.find(set2)) {
+                nums2.add(UF.find(set2));
+            }
+            else if (UF.find(i) == UF.find(set3)) {
+                nums3.add(UF.find(set3));
+            }
+            else if (UF.find(i) == UF.find(set4)) {
+                nums4.add(UF.find(set4));
+            }
         }
-        System.out.println( );
+        System.out.println(nums1);
+        System.out.println(nums2);
+        System.out.println(nums3);
+        System.out.println(nums4);
 
+        System.out.println();
+        
+        // This demonstrates path compression because every number points directly to its root
+        // The root for set 1 is 4, for set 2 is 9, for set 3 is 25, and set 4 is 1
+        System.out.println(Arrays.toString(UF.id));
     }
 }
